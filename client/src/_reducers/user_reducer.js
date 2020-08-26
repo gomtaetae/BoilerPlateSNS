@@ -1,5 +1,6 @@
 import {
   LOGIN_USER,
+  LOGOUT_USER,
   REGISTER_USER,
   AUTH_USER
 } from '../_actions/types';
@@ -15,6 +16,10 @@ export default function(state = {}, action){
       console.log('server에서 옴 =', action.payload)
       return { ...state, loginSuccess: action.payload }
       break;    
+
+    case LOGOUT_USER:
+        return { ...state, userData: action.payload }
+        break; 
       
     case REGISTER_USER:
       console.log('case가 REGISTER_USER =',REGISTER_USER)
