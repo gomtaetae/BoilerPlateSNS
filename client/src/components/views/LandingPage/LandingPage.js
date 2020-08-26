@@ -7,7 +7,7 @@ import { logoutUser } from "../../../_actions/user_action";
 
 function LandingWrapper (props){
   const userData = useSelector(state => state.user.userData)
-  console.log(userData);
+  console.log("이게 렌딩페이지 감싼다",userData);
   return (
   <>
     {userData !==undefined  &&<LandingPage userData={userData} props={props}></LandingPage>}
