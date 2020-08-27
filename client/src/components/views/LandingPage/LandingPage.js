@@ -5,15 +5,17 @@ import auth from "../../../hoc/auth";
 import { useSelector, useDispatch } from "react-redux"
 import { logoutUser } from "../../../_actions/user_action";
 
+
 function LandingWrapper (props){
   const userData = useSelector(state => state.user.userData)
   console.log("이게 렌딩페이지 감싼다",userData);
   return (
   <>
-    {userData !==undefined  &&<LandingPage userData={userData} props={props}></LandingPage>}
+    {userData !==undefined &&<LandingPage userData={userData} props={props}></LandingPage>}
   </>
   );
 }
+
 
 
 
@@ -48,6 +50,10 @@ function LandingPage({props, userData}) {
     props.history.push("/mypage");
   };
 
+  const onDelete = () => {
+    props.history.push("/delete");
+  }
+
   return (
     <div
       style={{
@@ -64,6 +70,7 @@ function LandingPage({props, userData}) {
         <div>{!userData.isAuth ? <button onClick={onLogin}>로그인</button>: false}</div>
         <div>{userData.isAuth ? <button onClick={onClickHandler}> 로그아웃 </button>: false}</div>
         <div>{userData.isAuth&&!userData.isSns ? <button onClick={onMyPage}> 회원수정 </button>: false}</div>
+        <div>{userData.isAuth ? <button onClick={onDelete}> 회원탈퇴 </button>: false}</div>
       </span>
     </div>
   );

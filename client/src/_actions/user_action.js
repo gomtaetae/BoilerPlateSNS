@@ -1,6 +1,7 @@
 import axios from "axios"
 import {
   LOGIN_USER,
+  CHECK_PASS,
   LOGOUT_USER,
   REGISTER_USER,
   AUTH_USER
@@ -14,6 +15,18 @@ export function loginUser(dataToSubmit){
   console.log('request: ',request)
   return {
     type: LOGIN_USER,
+    payload: request
+  }
+}
+
+export function checkPass(dataToSubmit){
+  console.log('클라이언트 입력한12: ',dataToSubmit)
+  const request = axios
+  .post("/api/users/check", dataToSubmit)
+  .then((response)=> response.data)
+  console.log('request: ',request)
+  return {
+    type: CHECK_PASS,
     payload: request
   }
 }

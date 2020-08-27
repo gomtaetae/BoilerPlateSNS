@@ -1,5 +1,6 @@
 import {
   LOGIN_USER,
+  CHECK_PASS,
   LOGOUT_USER,
   REGISTER_USER,
   AUTH_USER
@@ -16,6 +17,10 @@ export default function(state = {}, action){
       console.log('server에서 옴 =', action.payload)
       return { ...state, loginSuccess: action.payload }
       break;    
+
+    case CHECK_PASS:
+      return { ...state, successCheck: action.payload }
+      break;
 
     case LOGOUT_USER:
         return { ...state, userData: action.payload }

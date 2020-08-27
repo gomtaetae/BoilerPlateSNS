@@ -45,6 +45,31 @@ app.post("/api/users/register", (req, res) => {
   });
 });
 
+app.post("/api/users/check", (req, res) => {
+  console.log("sdfasdfasdf",req.body.password);
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if (!user) {
+      return res.json({
+        successCheck: false,
+        message: "제공된 이메일에 해당하는 유저가 없습니다.",
+      });
+    }
+    user.comparePassword(req.body.password, (err, isMatch) => {
+      console.log("isMatch",isMatch);
+      if(!isMatch){
+      return res.json({
+        successCheck: false, 
+        message: "비밀번호가 틀립니다."
+      })
+    }else {
+      return res.status(200).json({
+        successCheck: true,
+      })
+    }
+    })
+  })
+})
+
 app.post("/api/users/login", (req, res) => {
   console.log("login",req.body)
   User.findOne({ email: req.body.email }, (err, user) => {
@@ -140,6 +165,19 @@ app.get("/api/users/getConfirmation", auth, (req, res) => {
   );
 });
 
+app.post("/api/users/del", auth, (req, res) => {
+  console.log("삭제할꺼다", req.user._id);
+  User.findByIdAndDelete(
+    { _id: req.user._id},
+    (err, user) => {
+      if(err) return res.json({ success: false, err})
+      return res.status(200).send({
+        success:true
+      })
+    
+  })
+})
+
 app.get("/api/users/logout", auth, (req, res) => {
   console.log("log",req.body)
   console.log(",log",req.user)
@@ -225,6 +263,8 @@ app.post("/api/users/modify", auth, (req, res)=>{
     )
   })
 })
+
+
 
 
 app.listen(port, () => {

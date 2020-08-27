@@ -11,6 +11,7 @@ import GoogleLogin from "react-google-login";
 import KaKaoLogin from "react-kakao-login";
 import FacebookLogin from "react-facebook-login";
 import styled from "styled-components";
+import Axios from "axios";
 
 function RegisterPage(props) {
   //redux를 사용하기 위한 dispatch
@@ -20,6 +21,11 @@ function RegisterPage(props) {
   const [Password, setPassword] = useState("");
   const [Name, setName] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
+
+  //이미지 추가
+  const [img , setImage] = useState(null);
+
+  
 
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value);

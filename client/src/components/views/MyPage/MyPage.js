@@ -3,8 +3,12 @@ import axios from 'axios'
 import { withRouter} from 'react-router-dom'
 // import Dropzone from "react-dropzone";  //다운 받기
 
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../../_actions/user_action";
+
 function MyPage(props) {
 
+  const dispatch = useDispatch();
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const [currentPassword, setcurrentPassword] = useState("")
@@ -48,9 +52,21 @@ function MyPage(props) {
   }
 
   const onConfirmPasswordHandler = (event) => {
+    console.log("프롭스",props);
     setConfirmPassword(event.currentTarget.value);
   }
 
+  const onDeleteHandler = () => {
+    dispatch(logoutUser());
+    axios.post('/api/users/del')
+    .then((response) => {
+      console.log("지울꺼야ㅑㅑㅑㅑ",response);
+    })
+    alert("회원정보가 삭제되었습니다.");
+    
+    
+    props.history.replace("/"); //auth에서 먼저임
+  }
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
@@ -68,11 +84,14 @@ function MyPage(props) {
       password: Password !== "" ? Password : currentPassword
     };  
     // ConfirmPassword는 데이터베이스로 보내지 않기 때문에 body x
-    
+    if(UpdateName == "" && Password == ""){
+      alert("수정할 정보를 입력하세요")
+    } else {
     axios.post('/api/users/modify',body)
     .then((response) => console.log("mypage",response.data.user))
     alert("회원정보가 수정되었습니다.");
     props.history.replace("/"); //auth에서 먼저임
+    };
   };
   
 
@@ -104,6 +123,10 @@ function MyPage(props) {
 
         <button type = "submit">
           회원 수정
+        </button>
+
+        <button type="delete" onClick={onDeleteHandler}>
+          회원탈퇴
         </button>
       </form>
     </div>

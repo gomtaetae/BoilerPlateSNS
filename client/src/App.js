@@ -15,6 +15,8 @@ import MyPage from './components/views/MyPage/MyPage';
 import Confirmation from './components/views/Confirmation/Confirmation'
 import NotConfirmation from './components/views/NotConfirmation/NotConfirmation';
 
+import DeletPage from './components/views/DeletePage/DeletPage';
+
 import Auth from './hoc/auth'
 
 //공부한거
@@ -38,6 +40,8 @@ function App() {
                                                     {/*Auth가 나중에 실행됨*/}
           <Route exact path="/mypage" component={Auth(MyPage,true)} />
           {/* <Route exact path="/mypage" component={Auth(MyPage)} /> */}
+
+          <Route exact path="/delete" component={Auth(DeletPage, true)} />
 
           <Route path="/confirmation" component={Auth(Confirmation,true)} />
 

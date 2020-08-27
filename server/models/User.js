@@ -106,6 +106,10 @@ userSchema.methods.comparePassword = function (plainPassword, cb) {
   });
 };
 
+
+
+
+
 userSchema.methods.generateToken = function (cb) {
   var user = this; 
 
